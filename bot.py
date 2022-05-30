@@ -6,9 +6,9 @@ import sys
 from datetime import datetime
 import typing
 
-#intents = discord.Intents()
-#intents.members = True
-intents = discord.Intents.all()
+intents = discord.Intents.default()
+intents.members = True
+intents.messages = True
 
 def tpfx(code=0):
     '''Return the current time to use in volatile logging'''
@@ -44,7 +44,6 @@ except FileNotFoundError:
     with open('bot_config.json','w') as cfg_file:
         json.dump(bot_config, cfg_file)
         print("{} Wrote template bot_config.json, please update before running again".format(tpfx(3)))
-        print("{} Please read https://q5f.net/tutorial/dbt if you need help making a bot application and token".format(tpfx()))
     sys.exit()
 
 # Attempt to read a server config file (called server_config.json). If the file does not exist, create an empty dictionary in memory.
@@ -208,7 +207,7 @@ async def on_member_join(member):
 
     #await member.send("Welcome, {}, to {}!".format(member.name,member.guild.name))
 
-    print("{} {} (ID: {}) se ha unido al servidor {} (ID: {}), esperando {} segundos ({} minutos) para expulsarlo".format(tpfx(),member.name,member.id,member.guild.name,member.guild.id,(server_config[str(member.guild.id)]["timeout"]*60),server_config[str(member.guild.id)]["timeout"]))
+    print("{} {} (ID: {}) se ha unido al servidor {} (ID: {}), esperando {} minutos para expulsarlo".format(tpfx(),member.name,member.id,member.guild.name,member.guild.id,server_config[str(member.guild.id)]["timeout"]))
     await asyncio.sleep(int((server_config[str(member.guild.id)]["timeout"]))*60)
 
     if len(member.roles) == 1: #If a user "has no roles", they actually have the @everyone role, so the length of the roles is 1.
