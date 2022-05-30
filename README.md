@@ -1,17 +1,20 @@
 # AutoKick
-Once a user joins, this bot will wait a specified amount of time. If the new member does not have any roles at the end of the specified period, they will be kicked. 
+Cuando un usuario se una al servidor, este bot esperará una cantidad especificada de tiempo. Si el nuevo miembro no tiene ningún rol al final de ese periodo, será expulsado.
 
 ## self-hosting
-This bot can be hosted on any server running Python 3.6+. Tested with Python 3.7.3.
+Este bot podrá ser hosteado en cualquier servidor que ejecute Python 3.6+. Testeado con Python 3.7.3 y 3.10.0.
 
-Dependencies:
+Dependencias:
 - discord.py
 
-Dependencies can be installed using `pip3 -U install discord.py`.
+Las dependencias podrán ser instaladas con `pip3 -U install discord.py`.
 
-To start the bot, use `python bot.py` (or whatever your Python executable is called).
+Para ejecutar el bot, use `python bot.py` (o el nombre que tenga su ejecutable de Python).
 
-## license
-You are free to use, share, modify, redistribute, or monetize this code, in part or full, with the stipulation that derivatives give partial credit to the original author.
 
-ex. "Code originally written by QueueBot, modified by <your_name_here>"
+
+
+
+
+
+Codigo escrito originalmente por QueueBot, modificado por KaZaC.

@@ -43,7 +43,7 @@ except FileNotFoundError:
     }
     with open('bot_config.json','w') as cfg_file:
         json.dump(bot_config, cfg_file)
-        print("{} Wrote template bot_config.json, please update before running again".format(tpfx(3)))
+        print("{} Generado el archivo bot_config.json, por favor, actualicelo antes de ejecutar de nuevo".format(tpfx(3)))
     sys.exit()
 
 # Attempt to read a server config file (called server_config.json). If the file does not exist, create an empty dictionary in memory.
