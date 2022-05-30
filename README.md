@@ -16,5 +16,5 @@ Para ejecutar el bot, use `python bot.py` (o el nombre que tenga su ejecutable d
 
 
 
-
+## Attribution
 Codigo escrito originalmente por QueueBot, modificado por KaZaC.
