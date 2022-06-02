@@ -36,7 +36,7 @@ try:
         bot_config = json.load(cfg_file)
 except FileNotFoundError:
     bot_config = {
-        "token":"YOUR_TOKEN_HERE",
+        "token":"TU_TOKEN_AQUI",
         "prefix":"!!",
         "good_rxn":"🟩",
         "bad_rxn":"🟥"
@@ -95,23 +95,23 @@ async def _help(ctx, cmd=None):
     '''Help command. Self-explanatory'''
     await ctx.message.add_reaction(bot_config["good_rxn"])
     if cmd == None:
-        await ctx.send('''```For help about a specific command, type {}help <command_name>
-help - show this command
-timeout <time_in_minutes> - set the amount of time to wait before kicking users without roles
-toggle - toggle whether or not to kick users who don't have roles```'''.format(bot_config["prefix"]))
+        await ctx.send('''```Para ayuda sobre un comando en específico, escribe {}help <nombre_del_comando>
+help - muestra este comando
+timeout <tiempo_en_minutos> - registra el tiempo de espera antes de expulsar los usuarios sin roles
+toggle - activa o desactiva la expulsión automatica de usuarios sin roles```'''.format(bot_config["prefix"]))
     elif cmd.lower() == "timeout":
         await ctx.send('''```timeout - set the amount of time to wait before kicking users without roles.
-argument <time_in_minutes> - set the time in minutes to wait before kicking users. If not specified, display the current value.
-note - only users with the Manage Guild permission can use this command.
-note - this command cannot be used in PMs.
-example - {}timeout 20```'''.format(bot_config["prefix"]))
+argument <tiempo_en_minuto> - registra el tiempo de espera antes de expulsar los usuarios sin roles. Si no se especifica, muestra el valor actual.
+nota - solo los usuarios con el permiso de Gestionar Servidor pueden usar este comando.
+nota - este comando no se puede usar en PMs.
+ejemplo - {}timeout 20```'''.format(bot_config["prefix"]))
     elif cmd.lower() == "toggle":
-        await ctx.send('''```toggle - toggle whether or not to kick users who don't have roles
-note - only users with the Manage Guild permission can use this command.
-note - this command cannot be used in PMs.
-example - {}toggle```'''.format(bot_config["prefix"]))
+        await ctx.send('''```toggle - activa o desactiva la expulsión automatica de usuarios sin roles
+nota - solo los usuarios con el permiso de Gestionar Servidor pueden usar este comando.
+nota - este comando no se puede usar en PMs.
+ejemplo - {}toggle```'''.format(bot_config["prefix"]))
     else:
-        await ctx.send("No further help available for that command.")
+        await ctx.send("No hay ayuda disponible para este comando.")
 
 @bot.command(name="timeout", aliases=["delay"])
 @commands.check(no_pm)
@@ -120,14 +120,14 @@ async def _timeout(ctx, timeout: typing.Optional[int] = None):
     '''Set the timeout for a specific server. Timeout values must be greater than or equal to 1 minute. Only users with the Manage Guild permission can use this command.'''
     if timeout == None:
         await ctx.message.add_reaction(bot_config["good_rxn"])
-        await ctx.send("\{}Current timeout is **{}** minutes.".format(bot_config["good_rxn"],server_config[str(ctx.guild.id)]["timeout"]))
+        await ctx.send("\{}La espera actual es de **{}** minutos.".format(bot_config["good_rxn"],server_config[str(ctx.guild.id)]["timeout"]))
         return
 
     int_timeout = int(timeout)
 
     if int_timeout < 1:
         await ctx.message.add_reaction(bot_config["bad_rxn"])
-        await ctx.send("\{}Timeout must not be less than 1.".format(bot_config["bad_rxn"]))
+        await ctx.send("\{}La espera no debe ser menor de 1.".format(bot_config["bad_rxn"]))
         return
 
     try:
@@ -148,7 +148,7 @@ async def _timeout_error(ctx, error):
         await ctx.message.add_reaction(bot_config["bad_rxn"])
     elif isinstance(error, commands.errors.MissingPermissions):
         await ctx.message.add_reaction(bot_config["bad_rxn"])
-        await ctx.send("\{}You must have the `Manage Guild` permission to use this command.".format(bot_config["bad_rxn"]))
+        await ctx.send("\{}Debes tener el permiso de `Gestionar Servidor` para usar este comando.".format(bot_config["bad_rxn"]))
     else:
         raise(error)
 
@@ -162,23 +162,23 @@ async def _toggle(ctx):
             server_config[str(ctx.guild.id)]["enabled"] = False
         elif server_config[str(ctx.guild.id)]["enabled"] == False:
             server_config[str(ctx.guild.id)]["enabled"] = True
-        print("{} Toggle for guild ID {} ({}, invoked by user ID {})".format(tpfx(),ctx.guild.id,server_config[str(ctx.guild.id)]["enabled"],ctx.author.id))
+        print("{} Activador cambiado en el servidor {} (ID {}). {}, invocado por {} (ID {})".format(tpfx(),ctx.guild.name,ctx.guild.id,server_config[str(ctx.guild.id)]["enabled"],ctx.author.name,ctx.author.id))
         write_server_config()
 
         await ctx.message.add_reaction(bot_config["good_rxn"])
         if server_config[str(ctx.guild.id)]["enabled"] == True:
-            await ctx.send("\{}**Enabled** this server".format(bot_config["good_rxn"]))
+            await ctx.send("\{}**Activado** este servidor".format(bot_config["good_rxn"]))
         elif server_config[str(ctx.guild.id)]["enabled"] == False:
-            await ctx.send("\{}**Disabled** this server".format(bot_config["good_rxn"]))
+            await ctx.send("\{}**Desactivado** este servidor".format(bot_config["good_rxn"]))
     except KeyError:
         server_config[str(ctx.guild.id)] = {}
         server_config[str(ctx.guild.id)]["timeout"] = 20
         server_config[str(ctx.guild.id)]["enabled"] = True
-        print("{} Toggle for unmapped guild ID {} ({}, invoked by user ID {})".format(tpfx(),ctx.guild.id,server_config[str(ctx.guild.id)]["enabled"],ctx.author.id))
+        print("{} Activador cambiado en el servidor (sin registro) {} (ID {}). {}, invocado por {} (ID {})".format(tpfx(),ctx.guild.name,ctx.guild.id,server_config[str(ctx.guild.id)]["enabled"],ctx.author.name,ctx.author.id))
         write_server_config()
 
         await ctx.message.add_reaction(bot_config["good_rxn"])
-        await ctx.send("\{}Enabled this server with a timeout of **20** minutes".format(bot_config["good_rxn"]))
+        await ctx.send("\{}Activado este servidor con una espera de **20** minutos".format(bot_config["good_rxn"]))
 
 @_toggle.error
 async def _toggle_error(ctx, error):
@@ -186,7 +186,7 @@ async def _toggle_error(ctx, error):
         await ctx.message.add_reaction(bot_config["bad_rxn"])
     elif isinstance(error, commands.errors.MissingPermissions):
         await ctx.message.add_reaction(bot_config["bad_rxn"])
-        await ctx.send("\{}You must have the `Manage Guild` permission to use this command.".format(bot_config["bad_rxn"]))
+        await ctx.send("\{}Debes tener el permiso de `Gestionar Servidor` para usar este comando.".format(bot_config["bad_rxn"]))
     else:
         raise(error)
 
