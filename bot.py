@@ -97,10 +97,10 @@ async def _help(ctx, cmd=None):
     if cmd == None:
         await ctx.send('''```Para ayuda sobre un comando en específico, escribe {}help <nombre_del_comando>
 help - muestra este comando
-timeout <tiempo_en_minutos> - registra el tiempo de espera antes de expulsar los usuarios sin roles
+timeout <tiempo_en_minutos> - registra el tiempo de espera antes de expulsar los usuarios sin roles.
 toggle - activa o desactiva la expulsión automatica de usuarios sin roles```'''.format(bot_config["prefix"]))
     elif cmd.lower() == "timeout":
-        await ctx.send('''```timeout - set the amount of time to wait before kicking users without roles.
+        await ctx.send('''```timeout - registra el tiempo de espera antes de expulsar los usuarios sin roles.
 argument <tiempo_en_minuto> - registra el tiempo de espera antes de expulsar los usuarios sin roles. Si no se especifica, muestra el valor actual.
 nota - solo los usuarios con el permiso de Gestionar Servidor pueden usar este comando.
 nota - este comando no se puede usar en PMs.
